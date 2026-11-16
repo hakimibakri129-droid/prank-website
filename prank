@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Alert</title>
+<style>
+body {
+  background: black;
+  color: red;
+  font-family: monospace;
+  text-align: center;
+  padding-top: 100px;
+}
+h1 {
+  color: red;
+  text-shadow: 0 0 15px red;
+}
+button {
+  padding: 15px 30px;
+  background: red;
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+#percent {
+  color: red;
+  text-shadow: 0 0 10px red;
+}
+</style>
+</head>
+<body>
+
+<h1>⚠ SYSTEM ALERT ⚠</h1>
+<p id="msg">Your device is being scanned...</p>
+
+<h2 id="percent">0%</h2>
+
+<button onclick="start()">SCAN NOW</button>
+
+<script>
+let audio;
+let running = false;
+
+function start() {
+  if (running) return;
+  running = true;
+
+  audio = new Audio(
+    "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
+  );
+
+  audio.loop = true;
+  audio.play().catch(() => {});
+
+  let i = 0;
+
+  let timer = setInterval(function() {
+    i += 10;
+
+    document.getElementById("percent").innerHTML = i + "%";
+
+    if (i >= 100) {
+      clearInterval(timer);
+      audio.pause();
+
+      document.getElementById("msg").innerHTML =
+        "HAHAHA KENA PRANK!";
+
+      document.getElementById("percent").innerHTML =
+        "JUST A JOKE";
+
+      running = false;
+    }
+  }, 300);
+}
+</script>
+
+</body>
+</html>
